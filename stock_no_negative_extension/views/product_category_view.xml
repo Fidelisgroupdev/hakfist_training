@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_category_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock_no_negative.product.category.form</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="stock.product_category_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='allow_negative_stock']" position="attributes">
+                <attribute name="groups">stock_no_negative_extension.group_stock_check_user</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

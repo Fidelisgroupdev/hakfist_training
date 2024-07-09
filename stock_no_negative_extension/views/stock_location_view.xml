@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="view_location_form" model="ir.ui.view">
+        <field name="name">stock.location.form.allow_negative_stock</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form" />
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='allow_negative_stock']" position="attributes">
+                <attribute name="groups">stock_no_negative_extension.group_stock_check_user</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
