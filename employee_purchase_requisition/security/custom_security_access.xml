@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--CUSTOM JSA-->
+    <record model="ir.module.category" id="material_requisition_type">
+        <field name="name">Material Requisition Type</field>
+        <field name="description">Material Request Type</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="material_requisition_for_self" model="res.groups">
+        <field name="name">Self</field>
+        <field name="category_id" ref="material_requisition_type"/>
+    </record>
+
+    <record id="material_requisition_for_colleague_or_dep" model="res.groups">
+        <field name="name">Colleague/Department</field>
+        <field name="category_id" ref="material_requisition_type"/>
+        <field name="implied_ids"
+               eval="[(4, ref('employee_purchase_requisition.material_requisition_for_self'))]"/>
+    </record>
+
+    <!---->
+</odoo>

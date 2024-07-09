@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="product_product_dummy" model="product.product">
+        <field name="name">No Product</field>
+        <field name="default_code"></field>
+        <field name="barcode">000000000000000</field>
+        <field name="type">service</field>
+    </record>
+</odoo>

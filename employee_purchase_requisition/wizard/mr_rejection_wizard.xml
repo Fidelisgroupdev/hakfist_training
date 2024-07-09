@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_mr_rejection_wizard">
+        <field name="name">MR Rejection Wizard</field>
+        <field name="model">mr.rejection.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="rejection_reason"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_department_cancel" string="Reject" type="object" class="oe_highlight" data-hotkey="q"/>
+                    <button string="Discard" special="cancel" data-hotkey="x" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
