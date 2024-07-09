@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="theme_hak.list">
+      <field name="name">theme_hak list</field>
+      <field name="model">theme_hak.theme_hak</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="theme_hak.action_window">
+      <field name="name">theme_hak window</field>
+      <field name="res_model">theme_hak.theme_hak</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="theme_hak.action_server">
+      <field name="name">theme_hak server</field>
+      <field name="model_id" ref="model_theme_hak_theme_hak"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="theme_hak" id="theme_hak.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="theme_hak.menu_1" parent="theme_hak.menu_root"/>
+    <menuitem name="Menu 2" id="theme_hak.menu_2" parent="theme_hak.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="theme_hak.menu_1_list" parent="theme_hak.menu_1"
+              action="theme_hak.action_window"/>
+    <menuitem name="Server to list" id="theme_hak" parent="theme_hak.menu_2"
+              action="theme_hak.action_server"/>
+-->
+  </data>
+</odoo>

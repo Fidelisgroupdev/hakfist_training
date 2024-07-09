@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hak_layout_snippet" inherit_id="website.snippets">
+        <!-- Slider snippets  -->
+        <xpath expr="//div[@id='snippet_structure']" position="before">
+            <div id="slider_snippet_menu" class="o_panel">
+                <div class="o_panel_header">
+                    <i class="fa fa-puzzle-piece"/>
+                    Hak Snippets
+                </div>
+                <div class="o_panel_body">
+                    <t t-snippet="theme_hak.theme_hak_homepage1" t-thumbnail="/theme_hak/static/description/full_page.png" />
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
