@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_image_zip_importation_form" model="ir.ui.view">
+        <field name="name">image.zip.importation.form</field>
+        <field name="model">image.zip.importation</field>
+        <field name="arch" type="xml">
+            <form string="Image Upload">
+                <group invisible="state not in ['result']" string="Result">
+                    <group colspan="4">
+                        <field name="state" invisible="1"/>
+                        <field name="result_info" nolabel="1" colspan="4"/>
+                    </group>
+                </group>
+                <group invisible="state not in ['import']" string="Upload">
+                    <p class="oe_grey" colspan="4">
+                        Upload images in zip files.
+                    </p>
+                    <group colspan="4">
+                        <field name="img_zip_file" filename="filename" widget="binary"/>
+                        <field name="filename" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="model_id"/>
+                    </group>
+                    <group>
+                        <field name="id_field_id"/>
+                        <field name="img_field_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="import_images" string="Import" type="object"
+                        class="btn-primary" data-hotkey="c" invisible="state not in ['import']"/>
+                    <button string="Cancel" class="btn-secondary"
+                        special="cancel" data-hotkey="z" invisible="state not in ['import']"/>
+                    <button string="Done" class="btn-primary"
+                        special="cancel" data-hotkey="d" invisible="state not in ['result']"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_image_zip_importation" model="ir.actions.act_window">
+        <field name="name">upload images from Zip</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">image.zip.importation</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="hkf_img_import.model_image_zip_importation"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <menuitem id="image_zip_importation_menu"
+        name="Upload Image"
+        action="action_image_zip_importation"
+        parent="stock.menu_product_in_config_stock"
+        sequence="100"/>
+
+</odoo>

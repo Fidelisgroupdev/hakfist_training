@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='standard_price_uom']" position="inside">
+                <field name="user_can_update_cost" invisible="1"/>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']" position="attributes">
+                <attribute name="groups" separator="," add="hkf_prd_cost.group_product_cost"/>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']//field[@name='standard_price']" position="attributes">
+                <attribute name="readonly">not user_can_update_cost</attribute>
+            </xpath>
+
+            <xpath expr="//div[@name='pricing']" position="inside">
+                <field name="user_can_update_sales_price" invisible="1"/>
+            </xpath>
+            <xpath expr="//div[@name='pricing']" position="attributes">
+                <attribute name="groups" separator="," add="hkf_prd_cost.group_product_sales_price"/>
+            </xpath>
+            <xpath expr="//div[@name='pricing']//field[@name='list_price']" position="attributes">
+                <attribute name="readonly">not user_can_update_sales_price</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Variants view -->
+    <record id="product_variant_easy_edit_view" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="before">
+                <field name="user_can_update_cost" invisible="1"/>
+            </field>
+            <field name="standard_price" position="attributes">
+                <attribute name="readonly">not user_can_update_cost</attribute>
+            </field>
+
+            <field name="lst_price" position="before">
+                <field name="user_can_update_sales_price" invisible="1"/>
+            </field>
+            <field name="lst_price" position="attributes">
+                <attribute name="readonly">not user_can_update_sales_price</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_variant_product_normal_form_view" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="attributes">
+                <attribute name="readonly">not user_can_update_sales_price</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
