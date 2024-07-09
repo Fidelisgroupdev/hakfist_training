@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+     <!--    reason_for_return and  return_notes is added in picking_form-->
+     <record id="view_move_return_picking_inherit" model="ir.ui.view">
+        <field name="name">view.move.return.picking.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page/field[@name='move_ids_without_package']//tree/field[@name='product_uom']"
+                   position="after">
+                <field name="reason_for_return"/>
+            </xpath>
+            <xpath expr="//page[@name='note']" position="after">
+                <page string="Return Notes" name="return_notes_page">
+                    <field name="return_notes" placeholder="Add your return notes here..."/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

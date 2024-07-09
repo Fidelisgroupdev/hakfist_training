@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="thank_you_page">
+<!--        <div class="oe_structure">-->
+        <t t-call="website.layout">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Thanks for showing your interest!</h2>
+                        <p>We will notify you when the procedures are done.</p>
+
+                        <!-- Add a message display area -->
+<!--                        <div t-foreach="website.user_messages" t-as="message" class="alert alert-info">-->
+<!--                            <t t-esc="message['body']"/>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </t>
+<!--        </div>-->
+    </template>
+</odoo>

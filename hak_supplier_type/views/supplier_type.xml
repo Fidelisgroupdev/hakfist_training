@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_supplier_type_form_view">
+        <field name="name">Supplier Type Form</field>
+        <field name="model">supplier.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_supplier_type_list" model="ir.ui.view">
+        <field name="name">Supplier Type List</field>
+        <field name="model">supplier.type</field>
+        <field name="arch" type="xml">
+            <tree string="Supplier Type">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_supplier_type_form" model="ir.actions.act_window">
+        <field name="name">Supplier Type</field>
+        <field name="res_model">supplier.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_supplier_type_list"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Supplier Type
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="supplier_type_config"
+              name="Supplier Type"
+              parent="purchase.menu_purchase_config"
+              action="action_supplier_type_form"
+              sequence="11"/>
+
+</odoo>

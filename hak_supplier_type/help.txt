@@ -1,0 +1,1 @@
+In this model we are adding the supplier type to a vendor form, and restricting access to suppliers using this supplier type in user level

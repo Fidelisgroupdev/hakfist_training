@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_landed_cost_summary" model="ir.actions.report">
+            <field name="name">Landed Cost Summary</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hakfist_landed_cost_summary_report.report_landed_cost</field>
+            <field name="report_file">hakfist_landed_cost_summary_report.report_landed_cost</field>
+            <field name="print_report_name">'Landed Cost Summary Report'</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="paperformat_invoice_report_hakfist_landed_cost" model="report.paperformat">
+            <field name="name">US Letter</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">50</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">2</field>
+            <field name="margin_right">2</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">45</field>
+            <field name="dpi">90</field>
+        </record>
+        <record id="action_report_landed_cost_detailed" model="ir.actions.report">
+            <field name="name">Landed Cost Detailed Report</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hakfist_landed_cost_summary_report.report_landed_cost_detailed</field>
+            <field name="report_file">hakfist_landed_cost_summary_report.report_landed_cost_detailed</field>
+            <field name="print_report_name">'Landed Cost Detailed Report'</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="paperformat_id" ref="hakfist_landed_cost_summary_report.paperformat_invoice_report_hakfist_landed_cost"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

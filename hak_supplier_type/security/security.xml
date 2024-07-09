@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="allowed_supplier_rule" model="ir.rule">
+            <field name="name">Allowed Suppliers</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="domain_force">['|',('supplier_type_id','=',False),('supplier_type_id', 'in', user.supplier_type_ids.ids)]</field>
+        </record>
+
+    </data>
+</odoo>

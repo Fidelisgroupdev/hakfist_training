@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_temp_partner_user,temp.partner,model_temp_partner,hakfist_partner_reg.group_customer_review,1,1,1,1
+access_temp_partner_reg,temp.partner,model_temp_partner,hakfist_partner_reg.group_customer_registration,1,1,1,1
+access_contact_contact,contact.contact,model_contact_contact,hakfist_partner_reg.group_customer_registration,1,1,1,1
+access_contact_contact_review,contact.contact.review,model_contact_contact,hakfist_partner_reg.group_customer_review,1,1,1,1
+access_reject_reason,access.reject.reason,model_reject_reason,,1,1,1,1
+access_reject_wizard,access.reject.wizard,model_reject_wizard,,1,1,1,1

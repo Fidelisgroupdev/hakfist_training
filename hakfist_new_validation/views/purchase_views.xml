@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_inherit_tax" model="ir.ui.view">
+        <field name="name">purchase.order.inherit.tax</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='products']/field[@name='order_line']/tree/field[@name='taxes_id']"
+                   position="replace">
+
+                <field name="taxes_id" widget="many2many_tags"
+                       domain="[('type_tax_use','=','purchase'), ('company_id', 'parent_of', parent.company_id), ('country_id', '=', parent.tax_country_id)]"
+                       context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}"
+                       options="{'no_create': True}" optional="show"/>
+
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

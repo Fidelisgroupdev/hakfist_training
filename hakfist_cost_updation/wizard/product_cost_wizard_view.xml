@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_cost_wizard_form" model="ir.ui.view">
+            <field name="name">Product Cost</field>
+            <field name="model">product.cost.wiz</field>
+            <field name="arch" type="xml">
+                <form string="Product Cost">
+                    <group>
+                        <field name="product_cost"/>
+                        <field name="reason_for_change"/>
+                    </group>
+                    <footer>
+                        <button string="Confirm" name="cost_confirm" type="object" class="btn-default"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_window_product_cost_wizard" model="ir.actions.act_window">
+            <field name="name">Product Cost</field>
+            <field name="res_model">product.cost.wiz</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="product_cost_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>
+

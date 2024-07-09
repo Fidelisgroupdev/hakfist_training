@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_hakfist" model="ir.ui.view">
+        <field name="name">view.partner.form.inherit.hakfist</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="image_header" invisible="1" filename='file_name_header'
+                       widget="binary"/>
+                <field name="file_name_header" invisible="1"/>
+                <field name="image_footer" invisible="1" widget="binary" filename='file_name_image_footer'/>
+                <field name="file_name_image_footer" invisible="1"/>
+                <field name="customer_logo" widget="binary" filename='file_name_customer_logo'/>
+                <field name="file_name_customer_logo" invisible="1"/>
+
+            </field>
+            <xpath expr="//field[@name='country_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state_id']" position="attributes">
+                <attribute name="required">country_code == 'AE'</attribute>
+            </xpath>
+            <field name="category_id" position="after">
+                <field name="license_att_ids" widget="many2many_binary"
+                       string="Attach a file"
+                       nolabel="1" colspan="2"
+                />
+                <field name="trade_licence_expiry_date"/>
+
+                <field name="trn_att_ids" widget="many2many_binary"
+                       string="Attach a file"
+                       nolabel="1" colspan="2"
+                />
+            </field>
+        </field>
+    </record>
+    <record id="ir_filters_view_search" model="ir.ui.view">
+        <field name="model">temp.partner</field>
+        <field name="arch" type="xml">
+            <search string="Filters">
+                <filter string="For Review" name="for_review" domain="[('state','=','draft')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="state" domain="[]" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+
+        </field>
+    </record>
+</odoo>

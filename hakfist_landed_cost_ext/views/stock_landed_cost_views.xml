@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="stock_landed_cost_form_inherit_po">
+        <field name="name">stock.landed.cost.form.inherit.po</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='valuation_adjustment_lines']/tree" position="replace">
+                <tree string="Valuation Adjustments" editable="bottom" create="0">
+                    <field name="cost_line_id" readonly="1"/>
+                    <field name="purchase_order_id" optional="hide"/>
+                    <field name="product_id" readonly="1"/>
+                    <field name="weight" readonly="1" optional="hide"/>
+                    <field name="volume" readonly="1" optional="hide"/>
+                    <field name="purchase_unit_price" readonly="1" optional="hide"/>
+                    <field name="quantity" readonly="1"/>
+                    <field name="purchase_total_price" readonly="1" optional="hide"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="po_currency_id" invisible="1"/>
+                    <field name="former_cost" readonly="1"/>
+                    <field name="additional_landed_cost"/>
+                    <field name="final_cost" readonly="1"/>
+                    <field name="new_unit_price" readonly="1" optional="hide"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

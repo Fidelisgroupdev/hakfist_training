@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_landed_cost_detailed_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+            <div class="page">
+                <div class="oe_structure"/>
+
+                <div class="mt-4">
+                    <h2>Landed Cost Detailed Report</h2>
+                </div>
+
+                <div id="vendor" class="row mt-4 mb32">
+                    <div t-if="o.user_id" class="col-2 bm-2">
+                        <strong>Vendor:</strong>
+                        <p t-field="o.partner_id" class="m-0"/>
+                    </div>
+                    <div class="col-2 bm-2">
+                        <strong>PO Number:</strong>
+                        <p t-field="o.name" class="m-0"/>
+                    </div>
+                    <div t-if="o.state in ['purchase','done'] and o.date_approve" class="col-3 bm-2">
+                        <strong>PO Date:</strong>
+                        <p t-field="o.date_approve" class="m-0"/>
+                    </div>
+                    <div class="col-2 bm-2">
+                        <strong>Currency(PCY):</strong>
+                        <p t-field="o.currency_id" class="m-0"/>
+                    </div>
+                    <div class="col-2 bm-2">
+                        <strong>Company:</strong>
+                        <p t-field="o.company_id.name" class="m-0"/>
+                    </div>
+                </div>
+
+                <table class="table table-sm o_main_table mt-4">
+                    <thead>
+                        <tr align="center">
+                            <td>
+                                <strong>SL</strong>
+                            </td>
+                            <td>
+                                <strong>Code</strong>
+                            </td>
+                            <td>
+                                <strong>Description</strong>
+                            </td>
+                            <td>
+                                <strong>Vendor Code</strong>
+                            </td>
+                            <td>
+                                <strong>Qty</strong>
+                            </td>
+                            <td>
+                                <strong>Cost Per Unit(PCY)</strong>
+
+                            </td>
+                            <td>
+                                <strong>Total Direct Cost(PCY)</strong>
+
+                            </td>
+                            <td>
+                                <strong>Cost Per Unit(LCY)</strong>
+
+                            </td>
+                            <td>
+                                <strong>Total Direct Cost(LCY)</strong>
+
+                            </td>
+                            <td>
+                                <strong>Total Charges</strong>
+
+                            </td>
+                            <td>
+                                <strong>Landed Cost/Unit</strong>
+
+                            </td>
+                            <td>
+                                <strong>Total Cost</strong>
+
+                            </td>
+                            <td>
+                                <strong>Effective Unit Price</strong>
+                            </td>
+                        </tr>
+                    </thead>
+                    <t t-set="total_fcy" t-value="0"/>
+                    <t t-set="total_lcy" t-value="0"/>
+                    <t t-set="total_charges" t-value="0"/>
+                    <t t-set="total_cost" t-value="0"/>
+                    <tbody>
+                        <t t-set="landed_cost" t-value="o.get_landed_cost_detailed_data()"/>
+                        <t t-foreach="landed_cost" t-as="line">
+                            <t t-set="total_fcy" t-value="total_fcy+line['total_cost_fcy']"/>
+                            <t t-set="total_lcy" t-value="total_lcy+line['total_cost_lcy']"/>
+                            <t t-set="total_charges" t-value="total_charges+line['total_charges']"/>
+                            <t t-set="total_cost" t-value="total_cost+line['total_cost']"/>
+                            <tr>
+                                <td>
+                                    <span t-esc="line_index+1"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['item_code']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['description'].name"/>
+                                </td>
+                                <td>
+                                    <t t-foreach="line['description'].seller_ids" t-as="code">
+                                        <t t-if="code.partner_id==o.partner_id">
+                                            <span t-esc="code.product_code"/>
+                                        </t>
+                                    </t>
+                                </td>
+                                <td align="center">
+                                    <span t-esc="line['quantity']"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="line['cost_per_unit']"
+                                          t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="line['total_cost_fcy']"
+                                          t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="round(line['cost_per_unit_lcy'],2)"
+                                          t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="line['total_cost_lcy']"
+                                          t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="round(line['total_charges'],2)"
+                                          t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="round(line['landed_cost'],2)"
+                                          t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="round(line['total_cost'],2)"
+                                          t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="round(line['effective_unit_price'],2)"
+                                          t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr align="right">
+                            <td colspan="3">
+                                Total
+                            </td>
+                            <td colspan="3">
+
+                            </td>
+                            <td>
+                                <span t-esc="total_fcy" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                            </td>
+                            <td></td>
+                            <td>
+                                <span t-esc="total_lcy" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            </td>
+                            <td>
+                                <span t-esc="total_charges" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            </td>
+                            <td></td>
+                            <td>
+                                <span t-esc="total_cost" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_landed_cost_detailed">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="hakfist_landed_cost_summary_report.report_landed_cost_detailed_document"
+                   t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

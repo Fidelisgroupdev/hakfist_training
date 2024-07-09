@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_landedcost_summary_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+            <div class="page">
+                <div class="oe_structure"/>
+
+                <div class="mt-4">
+                    <h2>Landed Cost Summary</h2>
+                </div>
+
+                <div id="vendor" class="row mt-4 mb32">
+                    <div t-if="o.user_id" class="col-3 bm-2">
+                        <strong>Vendor:</strong>
+                        <p t-field="o.partner_id" class="m-0"/>
+                    </div>
+                    <div class="col-3 bm-2">
+                        <strong>PO Number:</strong>
+                        <p t-field="o.name" class="m-0"/>
+                    </div>
+                    <div t-if="o.state in ['purchase','done'] and o.date_approve" class="col-3 bm-2">
+                        <strong>PO Date:</strong>
+                        <p t-field="o.date_approve" class="m-0"/>
+                    </div>
+                    <div class="col-3 bm-2">
+                        <strong>Company:</strong>
+                        <p t-field="o.company_id.name" class="m-0"/>
+                    </div>
+                </div>
+
+                <table class="table table-sm o_main_table mt-4">
+                    <thead>
+                        <tr>
+                            <td>
+                                <strong>SL.No</strong>
+                            </td>
+                            <td>
+                                <strong>Code</strong>
+                            </td>
+                            <td>
+                                <strong>Description</strong>
+                            </td>
+                            <td>
+                                <strong>Amount</strong>
+                            </td>
+                        </tr>
+                    </thead>
+                    <t t-set="total_amount" t-value="0.00"/>
+                    <tbody>
+                        <t t-set="landed_cost_line" t-value="o.get_landed_cost_summary_data()"/>
+                        <t t-foreach="landed_cost_line" t-as="line">
+                            <t t-set="total_amount" t-value="total_amount+line['amount']"/>
+                            <tr>
+                                <td>
+                                    <span t-esc="line_index+1"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['cost_line_id']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['description']"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="line['amount']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <div id="total" class="row justify-content-end">
+                    <div class="col-4">
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Total</td>
+                                <td align="right"><span t-esc="total_amount" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/> </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <p t-field="o.notes" class="mt-4"/>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_landed_cost">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="hakfist_landed_cost_summary_report.report_landedcost_summary_document"
+                   t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

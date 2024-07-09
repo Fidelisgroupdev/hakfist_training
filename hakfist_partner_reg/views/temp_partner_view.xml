@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_temp_partner_form" model="ir.ui.view">
+            <field name="name">temp.partner.form</field>
+            <field name="model">temp.partner</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <form string="Temp Partners">
+                    <div class="alert alert-warning oe_edit_only" role="alert"
+                         invisible=" not same_vat_partner_id">
+                        A partner with the same
+                        <span>
+                            <span class="o_vat_label">Tax ID</span>
+                        </span>
+                        already exists (<field name="same_vat_partner_id"/>), are you sure to create a new one?
+                    </div>
+                    <div class="alert alert-warning oe_edit_only" role="alert"
+                         invisible="not same_company_registry_partner_id">
+                        A partner with the same
+                        <span>
+                            <span class="o_vat_label">Company Registry</span>
+                        </span>
+                        already exists (<field name="same_company_registry_partner_id"/>), are you sure to create a new
+                        one?
+                    </div>
+                    <header>
+                        <button name="create_partner" type="object" string="Approve" class="oe_highlight"
+                                invisible="state not in ['review']"
+                                groups="hakfist_partner_reg.group_customer_review"/>
+                        <button name="request_for_review" type="object" string="Send For Review" class="oe_highlight"
+                                invisible="state not in ['draft']"
+                        />
+                        <button name="action_cancel" type="object" string="Cancel" class="oe_highlight"
+                                invisible="state in ['draft','approved','rejected']"/>
+                        <button name="action_reject" type="object" string="Reject" class="oe_highlight"
+                                invisible="state in ['draft','approved','rejected']"
+                                groups="hakfist_partner_reg.group_customer_review"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,review,approved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                invisible="active"/>
+                        <field name="avatar_128" invisible="1"/>
+                        <field name="image_1920" widget='image' class="oe_avatar"
+                               options='{"preview_image": "avatar_128"}'/>
+
+                        <div class="oe_title mb24">
+                            <field name="is_company" invisible="1"/>
+                            <!--                        <field name="commercial_partner_id" invisible="1"/>-->
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="country_code" invisible="1"/>
+                            <field name="company_type" widget="radio" readonly="1" options="{'horizontal': true}"/>
+                            <h1>
+                                <field id="company" class="text-break" name="name" default_focus="1"
+                                       placeholder="Customer Company Name"
+                                       invisible="is_company"
+                                       readonly="state =='review'"
+                                       required="1"
+                                />
+                                <!--                                <field id="individual" class="text-break" name="name" default_focus="1"-->
+                                <!--                                       placeholder="e.g. Brandom Freeman"-->
+                                <!--                                       required="type =='contact'" invisible="is_company" readonly="state != 'draft'"/>-->
+                            </h1>
+                            <!--                            <div class="o_row">-->
+                            <!--                                <field name="parent_id"-->
+                            <!--                                       widget="res_partner_many2one"-->
+                            <!--                                       placeholder="Company Name..."-->
+                            <!--                                       domain="[('is_company', '=', True)]"-->
+                            <!--                                       context="{'default_is_company': True, 'show_vat': True}"-->
+                            <!--                                       invisible="is_company and parent_id or not company_name or company_name != ''" readonly="state != 'draft'"/>-->
+                            <!--                                <field name="company_name"-->
+                            <!--                                       invisible="company_name or company_name == '' or is_company" readonly = "state !='draft'"/>-->
+                            <!--                                &lt;!&ndash;                                <button name="create_company" icon="fa-plus-square" string="Create company"&ndash;&gt;-->
+                            <!--                                &lt;!&ndash;                                    type="object" class="oe_edit_only btn-link"&ndash;&gt;-->
+                            <!--                                &lt;!&ndash;                                    attrs="{'invisible': ['|', '|', ('is_company','=', True), ('company_name', '=', ''), ('company_name', '=', False)]}"/>&ndash;&gt;-->
+                            <!--                            </div>-->
+                        </div>
+                        <!--                        <group>-->
+                        <!--                            <group>-->
+                        <!--                                <field name="customer_id" readonly="1"/>-->
+                        <!--                        </group>-->
+                        <group>
+                            <group string="Company Address">
+                                <field name="customer_id" readonly="1"/>
+
+                                <!--                                <field name="vat" placeholder="e.g. BE0477472701"-->
+                                <!--                                       attrs="{'readonly': [('state','!=', 'draft')]}"/>-->
+                                <field name="phone" widget="phone" readonly="state !='draft'"/>
+                                <field name="mobile" widget="phone" readonly="state !='draft'"/>
+                                <!--                            <field name="user_ids" invisible="1"/>-->
+                                <field name="email" widget="email" context="{'gravatar_image': True}"
+                                       readonly="state !='draft'"/>
+                                <field name="website" string="Website" widget="url"
+                                       placeholder="e.g. https://www.hakfist.com"
+                                       readonly="state !='draft'"/>
+                                <!--                                <field name="title" options='{"no_open": True}' placeholder="e.g. Mister"-->
+                                <!--                                       attrs="{'invisible': [('is_company', '=', True)],'readonly': [('state','!=', 'draft')]}"/>-->
+                                <field name="active_lang_count" invisible="1"/>
+                                <field name="lang"
+                                       invisible="active_lang_count &lt;= 1" readonly="state != 'draft'"/>
+                                <!--                                <field name="category_id" widget="many2many_tags"-->
+                                <!--                                       options="{'color_field': 'color', 'no_create_edit': True}"-->
+                                <!--                                       placeholder='e.g. "B2B", "VIP", "Consulting", ...'-->
+                                <!--                                       attrs="{'readonly': [('state','!=', 'draft')]}"/>-->
+
+                                <!--                                <span class="o_form_label o_td_label" name="address_name">-->
+                                <!--                                    <field name="type"-->
+                                <!--                                           invisible = "is_company" required="is_company" readonly="state != 'draft'"-->
+                                <!--                                           class="fw-bold"/>-->
+                                <!--                                    <b invisible = "not is_company">Address</b>-->
+                                <!--                                </span>-->
+
+                                <span class="o_form_label o_td_label" name="address_name">
+                                    <b>Address</b>
+                                </span>
+
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"
+                                           readonly="state !='draft'"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                           readonly="state !='draft'"/>
+                                    <field name="city" placeholder="City" class="o_address_city"
+                                           readonly="state !='draft'"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State"
+                                           options="{'no_open': True, 'no_quick_create': True}"
+                                           readonly="state !='draft'" required="country_code == 'AE'"
+                                           context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                           readonly="state !='draft'"/>
+                                    <div name="partner_address_country" class="d-flex justify-content-between">
+                                        <field name="country_id" placeholder="Country" class="o_address_country"
+                                               options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                                               readonly="state !='draft'" required="1"/>
+                                    </div>
+                                </div>
+
+
+                            </group>
+
+                            <group string="Document Details">
+                                <field name="company_registry" readonly="state !='draft'"/>
+
+                                <field name="trade_licence_expiry_date"
+                                       readonly="state !='draft'"/>
+                                <field name="license_att_ids" widget="many2many_binary"
+                                       string="Attach a file"
+                                       nolabel="1" colspan="2" readonly="state !='draft'"/>
+                                <field name="trn_number"
+                                       readonly="state !='draft'"/>
+
+                                <field name="trn_att_ids" widget="many2many_binary"
+                                       string="Attach a file"
+                                       nolabel="1" colspan="2" readonly="state !='draft'"/>
+                                <field name="image_header" filename='file_name_header'
+                                       readonly="state !='draft'" invisible="1" widget="binary"/>
+                                <field name="file_name_header" invisible="1"/>
+
+                                <field name="image_footer" widget="binary" filename='file_name_image_footer'
+                                       readonly="state !='draft'" invisible="1"/>
+                                <field name="file_name_image_footer" invisible="1"/>
+                                <field name="customer_logo" widget="binary" filename='file_name_customer_logo'/>
+                                <field name="file_name_customer_logo" invisible="1"/>
+
+                            </group>
+                            <group string="Other Details">
+
+                                <field name="is_reg_user" invisible="1"/>
+                                <field name="sale_person_id" readonly="is_reg_user"/>
+                                <field name="team_id" readonly="is_reg_user"/>
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page name='contacts' string="Contacts">
+                                <field name="contact_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="cust_reg_id" invisible="1"/>
+                                        <field name="name"/>
+                                        <field name="function"/>
+                                        <field name="mobile"/>
+                                        <field name="email"/>
+
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name='rejection_details' string="Rejection Details" invisible="state != 'rejected'">
+                                <group>
+                                    <group>
+                                        <field name="reject_reason_id"/>
+                                        <field name="rejection_description"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <!--                            <page name='document_details' string="Document Details">-->
+                            <!--                                <group>-->
+                            <!--                                    <group>-->
+
+                            <!--                                        <field name="trade_licence_expiry_date"-->
+                            <!--                                               readonly="state !='draft'"/>-->
+                            <!--                                        <field name="trn_expiry_date"-->
+                            <!--                                               readonly="state !='draft'"/>-->
+                            <!--                                    </group>-->
+                            <!--                                    <group>-->
+
+                            <!--                                        <field name="image_header" filename='file_name_header'-->
+                            <!--                                               readonly="state !='draft'" widget="binary"/>-->
+                            <!--                                        <field name="file_name_header" invisible="1"/>-->
+
+                            <!--                                        <field name="image_footer" widget="binary" filename='file_name_image_footer'-->
+                            <!--                                               readonly="state !='draft'"/>-->
+                            <!--                                    </group>-->
+                            <!--                                </group>-->
+
+                            <!--                            </page>-->
+                        </notebook>
+
+                        <!--                    <notebook colspan="4">-->
+                        <!--                        <page string="Contacts &amp; Addresses" name="contact_addresses" autofocus="autofocus">-->
+                        <!--                            <field name="child_ids" mode="kanban" context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': 'other'}">-->
+                        <!--                                <kanban>-->
+                        <!--                                    <field name="id"/>-->
+                        <!--                                    <field name="color"/>-->
+                        <!--                                    <field name="name"/>-->
+                        <!--                                    <field name="title"/>-->
+                        <!--                                    <field name="type"/>-->
+                        <!--                                    <field name="email"/>-->
+                        <!--                                    <field name="parent_id"/>-->
+                        <!--                                    <field name="is_company"/>-->
+                        <!--                                    <field name="function"/>-->
+                        <!--                                    <field name="phone"/>-->
+                        <!--                                    <field name="street"/>-->
+                        <!--                                    <field name="street2"/>-->
+                        <!--                                    <field name="zip"/>-->
+                        <!--                                    <field name="city"/>-->
+                        <!--                                    <field name="country_id"/>-->
+                        <!--                                    <field name="mobile"/>-->
+                        <!--                                    <field name="state_id"/>-->
+                        <!--                                    <field name="image_128"/>-->
+                        <!--                                    <field name="avatar_128"/>-->
+                        <!--                                    <field name="lang"/>-->
+                        <!--                                    &lt;!&ndash; fields in form x2many view to diminish requests &ndash;&gt;-->
+                        <!--                                    <field name="comment"/>-->
+                        <!--                                    <field name="display_name"/>-->
+                        <!--                                    <templates>-->
+                        <!--                                        <t t-name="kanban-box">-->
+                        <!--                                            <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>-->
+                        <!--                                            <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">-->
+                        <!--                                                <div class="o_kanban_image">-->
+                        <!--                                                    <img alt="Contact image" t-att-src="kanban_image('res.partner', 'avatar_128', record.id.raw_value)"/>-->
+                        <!--                                                </div>-->
+                        <!--                                                <div class="oe_kanban_details">-->
+                        <!--                                                    <field name="name"/>-->
+                        <!--                                                    <div t-if="record.function.raw_value"><field name="function"/></div>-->
+                        <!--                                                    <div t-if="record.email.raw_value"><field name="email" widget="email"/></div>-->
+                        <!--                                                    <div t-if="record.type.raw_value != 'contact'">-->
+                        <!--                                                        <div>-->
+                        <!--                                                            <field name="zip"/><t t-if="record.city"> </t>-->
+                        <!--                                                            <field name="city"/>-->
+                        <!--                                                        </div>-->
+                        <!--                                                        <field t-if="record.state_id.raw_value" name="state_id"/><t t-if="record.country_id"> </t>-->
+                        <!--                                                        <field name="country_id"/>-->
+                        <!--                                                    </div>-->
+                        <!--                                                    <div t-if="record.phone.raw_value">Phone: <t t-esc="record.phone.value"/></div>-->
+                        <!--                                                    <div t-if="record.mobile.raw_value">Mobile: <t t-esc="record.mobile.value"/></div>-->
+                        <!--                                                </div>-->
+                        <!--                                            </div>-->
+                        <!--                                        </t>-->
+                        <!--                                    </templates>-->
+                        <!--                                </kanban>-->
+                        <!--                                <form string="Contact / Address">-->
+                        <!--                                    <sheet>-->
+                        <!--                                        <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>-->
+                        <!--                                        <field name="parent_id" invisible="1"/>-->
+                        <!--                                        <div class="text-muted oe_edit_only">-->
+                        <!--                                            <p class="mb-0" attrs="{'invisible': [('type', '!=', 'contact')]}">-->
+                        <!--                                                <span>Use this to organize the contact details of employees of a given company (e.g. CEO, CFO, ...).</span>-->
+                        <!--                                            </p>-->
+                        <!--                                            <p class="mb-0" attrs="{'invisible': [('type', '!=', 'invoice')]}">-->
+                        <!--                                                <span>Preferred address for all invoices. Selected by default when you invoice an order that belongs to this company.</span>-->
+                        <!--                                            </p>-->
+                        <!--                                            <p class="mb-0" attrs="{'invisible': [('type', '!=', 'delivery')]}">-->
+                        <!--                                                <span>Preferred address for all deliveries. Selected by default when you deliver an order that belongs to this company.</span>-->
+                        <!--                                            </p>-->
+                        <!--                                            <p class="mb-0" attrs="{'invisible': [('type', '!=', 'private')]}">-->
+                        <!--                                                <span>Private addresses are only visible by authorized users and contain sensitive data (employee home addresses, ...).</span>-->
+                        <!--                                            </p>-->
+                        <!--                                            <p class="mb-0" attrs="{'invisible': [('type', '!=', 'other')]}">-->
+                        <!--                                                <span>Other address for the company (e.g. subsidiary, ...)</span>-->
+                        <!--                                            </p>-->
+                        <!--                                        </div>-->
+                        <!--                                        <hr/>-->
+                        <!--                                        <group>-->
+                        <!--                                            <group>-->
+                        <!--                                                <field name="name" string="Contact Name" attrs="{'required' : [('type', '=', 'contact')]}"/>-->
+                        <!--                                                <field name="title" options="{'no_open': True}" placeholder="e.g. Mr."-->
+                        <!--                                                    attrs="{'invisible': [('type','!=', 'contact')]}"/>-->
+                        <!--                                                <field name="function" placeholder="e.g. Sales Director"-->
+                        <!--                                                    attrs="{'invisible': [('type','!=', 'contact')]}"/>-->
+                        <!--                                                <label for="street" string="Address" attrs="{'invisible': [('type','=', 'contact')]}"/>-->
+                        <!--                                                <div attrs="{'invisible': [('type','=', 'contact')]}">-->
+                        <!--                                                    <div class="o_address_format" name="div_address">-->
+                        <!--                                                        <field name="street" placeholder="Street..." class="o_address_street"/>-->
+                        <!--                                                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>-->
+                        <!--                                                        <field name="city" placeholder="City" class="o_address_city"/>-->
+                        <!--                                                        <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>-->
+                        <!--                                                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>-->
+                        <!--                                                        <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>-->
+                        <!--                                                    </div>-->
+                        <!--                                                </div>-->
+                        <!--                                            </group>-->
+                        <!--                                            <group>-->
+                        <!--                                                <field name="email" widget="email"/>-->
+                        <!--                                                <field name="phone" widget="phone"/>-->
+                        <!--                                                <field name="mobile" widget="phone"/>-->
+                        <!--                                                <field name="company_id" invisible="1"/>-->
+                        <!--                                            </group>-->
+                        <!--                                        </group>-->
+                        <!--                                        <group>-->
+                        <!--                                            <field name="comment" placeholder="Internal notes..." nolabel="1" colspan="2"/>-->
+                        <!--                                        </group>-->
+                        <!--                                        <field name="lang" invisible="True"/>-->
+                        <!--                                        <field name="user_id" invisible="True"/>-->
+                        <!--                                    </sheet>-->
+                        <!--                                </form>-->
+                        <!--                            </field>-->
+                        <!--                        </page>-->
+                        <!--                        <page name='sales_purchases' string="Sales &amp; Purchase">-->
+                        <!--                            <group name="container_row_2">-->
+                        <!--                                <group string="Sales" name="sale" priority="1">-->
+                        <!--                                    <field name="user_id" widget="many2one_avatar_user" domain="[('share', '=', False)]"/>-->
+                        <!--                                </group>-->
+                        <!--                                <group string="Purchase" name="purchase" priority="2">-->
+                        <!--                                </group>-->
+                        <!--                                <group name="misc" string="Misc">-->
+                        <!--                                    <field name="company_registry" attrs="{'invisible': [('parent_id','!=',False)]}"/>-->
+                        <!--                                    <field name="ref" string="Reference"/>-->
+                        <!--                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" attrs="{'readonly': [('parent_id', '!=', False)]}" force_save="1"/>-->
+                        <!--                                    <field name="industry_id" attrs="{'invisible': [('is_company', '=', False)]}" options="{'no_create': True}"/>-->
+                        <!--                                </group>-->
+                        <!--                            </group>-->
+                        <!--                        </page>-->
+                        <!--                        <page name='internal_notes' string="Internal Notes">-->
+                        <!--                            <field name="comment" placeholder="Internal notes..."/>-->
+                        <!--                        </page>-->
+                        <!--                    </notebook>-->
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_temp_partner_tree" model="ir.ui.view">
+            <field name="name">temp.partner.tree</field>
+            <field name="model">temp.partner</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="display_name" string="Name"/>
+                    <!--                    <field name="function" invisible="1"/>-->
+                    <field name="mobile" class="o_force_ltr" optional="show"/>
+                    <field name="email" optional="show"/>
+                    <field name="sale_person_id" optional="show"/>
+                    <!--                    <field name="user_id" optional="show" widget="many2one_avatar_user" domain="[('share', '=', False)]"/>-->
+                    <!--                    <field name="city" optional="show"/>-->
+                    <!--                    <field name="state_id" optional="hide" readonly="1"/>-->
+                    <!--                    <field name="country_id" optional="show" readonly="1"/>-->
+                    <!--                    <field name="vat" optional="hide" readonly="1"/>-->
+                    <!--                    <field name="category_id" optional="hide" widget="many2many_tags"-->
+                    <!--                           options="{'color_field': 'color'}"/>-->
+                    <!--                    <field name="company_id" groups="base.group_multi_company" readonly="1"/>-->
+                    <field name="state" readonly="1"/>
+                    <!--                    <field name="is_company" invisible="1"/>-->
+                    <!--                    <field name="parent_id" invisible="1" readonly="1"/>-->
+                    <!--                    <field name="active" invisible="1"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_temp_partner" model="ir.actions.act_window">
+            <field name="name">Customer Registration Management</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">temp.partner</field>
+            <field name="view_mode">tree,form</field>
+            <!--                        <field name="domain">[('create_uid','=','current_user_id'),('is_reg_user','=',True)]</field>-->
+        </record>
+
+        <menuitem id="menu_customer_registration_management"
+                  action="action_temp_partner"
+                  name="Customer Registration"
+                  parent="crm.crm_menu_root"
+                  groups="hakfist_partner_reg.group_customer_registration,hakfist_partner_reg.group_customer_review"/>
+    </data>
+</odoo>
