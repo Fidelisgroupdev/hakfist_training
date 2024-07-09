@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_with_carrier" model="ir.ui.view">
+        <field name="name">delivery.sale.order.form.view.with_carrier</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div name="so_button_below_order_lines" position="inside">
+                <button
+                        string="Add Packaging"
+                        name="action_open_packing_wizard"
+                        type="object"
+                />
+                <!--<button
+                        string="Update shipping cost"
+                        name="action_open_packing_wizard"
+                        context="{'carrier_recompute':True}"
+                        type="object"
+                        class="text-warning btn-secondary"
+                />-->
+                <!--                <button-->
+                <!--                    string="Update shipping cost"-->
+                <!--                    name="action_open_delivery_wizard"-->
+                <!--                    context="{'carrier_recompute':True}"-->
+                <!--                    type="object"-->
+                <!--                    invisible="is_all_service or recompute_delivery_price or not delivery_set"/>-->
+            </div>
+        </field>
+    </record>
+
+</odoo>

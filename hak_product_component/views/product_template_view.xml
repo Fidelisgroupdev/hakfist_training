@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_product_template_form_inherit_product_component" model="ir.ui.view">
+            <field name="name">view.product.template.form.inherit.product.component</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="hak_product_configurator.view_product_template_form_inherit_product_configurator"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='printing_side_line_ids']/tree/field[@name='side_code']" position="after">
+                    <field name="component_id" column_invisible="1" invisible="1"/>
+                    <field name="component_product_id" domain="[('is_component', '=', True), ('component_id', '=', component_id)]"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_printing_side_line_form_inherit_product_component" model="ir.ui.view">
+            <field name="name">view.printing.side.line.form.inherit.product.component</field>
+            <field name="model">printing.side.line</field>
+            <field name="inherit_id" ref="hak_product_configurator.view_printing_side_line_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_temp_id']" position="after">
+                    <field name="component_id" invisible="1"/>
+                    <field name="component_product_id" domain="[('is_component', '=', True), ('component_id', '=', component_id)]"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,99 @@
+<odoo>
+    <data>
+        <record id="product_component_form_view" model="ir.ui.view">
+            <field name="name">product.component.form.view</field>
+            <field name="model">product.component</field>
+            <field name="arch" type="xml">
+                <form string="Create Component">
+                    <header>
+                        <button name="action_request_for_approval" type="object" string="Send For Approval"
+                                class="oe_highlight"
+                                invisible="state not in ['draft']"
+                        />
+                        <button name="action_create_component"
+                                string="Approve"
+                                invisible="state not in ['review']"
+                                type="object"
+                                groups="hak_product_component.group_components_approval_user"
+                                class="btn-primary"/>
+                        <button name="action_cancel_component" invisible="state not in ['approved']" string="Cancel" class="btn-default" type="object"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button"
+                                    name="action_view_bom" icon="fa-flask"
+                                    type="object">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">BOM</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button"
+                                    name="action_view_products" icon="fa-th-list"
+                                    type="object">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Products</span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id"
+                                       domain="[('personalization_applicable', '=', True), ('components_created', '=', False)]"/>
+                            </group>
+                            <group>
+                                <field name="family_code" readonly="1"/>
+                            </group>
+
+                        </group>
+                        <notebook>
+                            <page string="Component Types">
+                                <field name="product_component_type_ids" force_save="1"
+                                       context="{'default_id': id}">
+                                    <tree editable="bottom">
+                                        <!--                                <field name=_id" invisible="1"/>-->
+                                        <field name="component_type"/>
+                                        <field name="name"/>
+                                        <field name="printing_possible"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_product_component_list" model="ir.ui.view">
+            <field name="name">Partner Logo List</field>
+            <field name="model">product.component</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_product_component_2" model="ir.actions.act_window">
+            <field name="name">Components</field>
+            <field name="res_model">product.component</field>
+            <field name="view_mode">tree,form</field>
+            <!--        <field name="view_id" ref="view_printing_type_list"/>-->
+        </record>
+
+        <!--<record id="action_product_component" model="ir.actions.act_window">
+            <field name="name">Components</field>
+            <field name="res_model">product.component</field>
+            <field name="view_mode">tree,form</field>
+            &lt;!&ndash;            <field name="view_id" ref="product_component_form_view"/>&ndash;&gt;
+            &lt;!&ndash;            <field name="target">new</field>&ndash;&gt;
+        </record>-->
+
+        <menuitem id="product_component_menu"
+                  name="Components"
+                  parent="stock.menu_product_in_config_stock"
+                  action="action_product_component_2"
+                  sequence="12"/>
+
+    </data>
+</odoo>

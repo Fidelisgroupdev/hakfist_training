@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_packaging_method_tree" model="ir.ui.view">
+        <field name="name">packaging.method.tree</field>
+        <field name="model">packaging.method</field>
+        <field name="arch" type="xml">
+            <tree string="Packaging Methods">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_packaging_method_search" model="ir.ui.view">
+        <field name="name">packaging.method.search</field>
+        <field name="model">packaging.method</field>
+        <field name="arch" type="xml">
+            <search string="Packaging Methods">
+                <field name="name" string="Packaging Method"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_packaging_method_form" model="ir.ui.view">
+        <field name="name">packaging.method.form</field>
+        <field name="model">packaging.method</field>
+        <field name="arch" type="xml">
+            <form string="Packaging Methods">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title" name="title">
+                        <label for="name" string="Packaging Method"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="">
+                            <field name="active" invisible="1"/>
+                            <field name="package_type_id"/>
+                        </group>
+                        <group name="">
+                            <field name="product_id"
+                                   context="{'default_detailed_type': 'service', 'default_sale_ok': False, 'default_purchase_ok': False}"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount" widget="monetary"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_packaging_method_form" model="ir.actions.act_window">
+        <field name="name">Packaging Methods</field>
+        <field name="res_model">packaging.method</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="sale_menu_action_packaging_method_form"
+              action="action_packaging_method_form"
+              parent="sale.menu_sales_config"
+              sequence="4"/>
+
+</odoo>

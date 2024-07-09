@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="brand_external_inherit" inherit_id="web.external_layout_boxed">
+        <xpath expr="//div[1]/div[2]/div[2]" position="replace">
+            <div class="text-start mb4" style="width: 75% !important;">
+                <div class="mt0 h4" t-field="company.report_header"/>
+                <div name="company_address" class="mb4">
+                    <span t-if="company.company_details" t-field="company.company_details"></span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template id="brand_address_inherit" inherit_id="web.address_layout">
+        <xpath expr="//div[@name='address']" position="replace">
+            <div name="address" t-att-class="">
+                <t t-esc="address"/>
+            </div>
+        </xpath>
+    </template>
+    <template id="brand_report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[hasclass('page')]/h2[hasclass('mt-4')]" position="replace">
+            <h2 class="mt-4">
+                <span t-if="env.context.get('proforma', False) or is_pro_forma">Pro-Forma Invoice #</span>
+                <span t-elif="doc.state in ['draft','reviewed','sent']">Quotation #</span>
+                <span t-else="">Order #</span>
+                <span t-field="doc.name"/>
+            </h2>
+            <!--            <span t-elif="doc.state in ['draft','reviewed','sent']">Quotation #</span>-->
+        </xpath>
+
+
+        <xpath expr="//p[@t-field='doc.user_id']" position="after">
+            <p t-if="doc.user_id.phone" class="m-0" t-esc="doc.user_id.phone"/>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_brand" class="text-start">SL NO</th>
+            <th name="th_brand" class="text-start">Brand</th>
+        </xpath>
+        <xpath expr="//t[@t-foreach='lines_to_report']" position="before">
+            <t t-set="sl_no" t-value="1"/>
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="before">
+            <td name="td_brand">
+                <span t-esc="sl_no"/>
+            </td>
+            <td name="td_brand">
+                <span t-field="line.product_id.brand_id"/>
+            </td>
+        </xpath>
+        <xpath expr="//t[@t-foreach='lines_to_report']" position="inside">
+            <t t-if="not line.display_type" t-set="sl_no" t-value="sl_no + 1"/>
+        </xpath>
+        <xpath expr="//div[@name='so_total_summary']" position="after">
+            <table class="table" width="100%" style="margin-top:5px;">
+                <tr class="border-black o_total"
+                    style="border: 1px solid black; color: #fff; background-color:#f08f92; padding: 1px !important;">
+                    <td style="width:99.9%;border-right:none !important;">
+                        <strong>Total(in words)
+                            <span t-esc="doc.total_amount_in_words"/>
+                        </strong>
+                    </td>
+                    <td style="width:0.1%; color: #fff; background-color:#f08f92 !important;border-left:none !important;">
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table" width="100%" style="margin-top:10px;">
+                <tr style="border: 1px solid black;">
+                    <td>
+                        <strong>Notes:</strong>
+                        <span>Once approved, Please mention Quotation number on Purchase Order</span>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+    </template>
+
+    <template id="brand_report_invoice_document_inherited" inherit_id="account.report_invoice_document">
+
+        <xpath expr="//div[@id='informations']" position="before">
+            <div id="informations" class="row mt-4 mb-4">
+                <div class="col-auto col-4 mw-100 mb-2" t-if="o.po_ref" name="po_ref">
+                    <strong>PO Number:</strong>
+                    <p class="m-0" t-field="o.po_ref"/>
+                </div>
+                <div class="col-auto col-4 mw-100 mb-2" t-if="o.do_ref" name="do_ref">
+                    <strong>DO Number:</strong>
+                    <p class="m-0" t-field="o.do_ref"/>
+                </div>
+                <div class="col-auto col-4 mw-100 mb-2" t-if="o.invoice_user_id" name="salesman">
+                    <strong>Salesman:</strong>
+                    <p class="m-0" t-field="o.invoice_user_id"/>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_brand" class="text-start">SL NO</th>
+            <!--            <th name="th_brand" class="text-start">Brand</th>-->
+        </xpath>
+        <xpath expr="//t[@t-foreach='lines']" position="before">
+            <t t-set="sl_no" t-value="1"/>
+        </xpath>
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td name="td_brand">
+                <span t-esc="sl_no"/>
+            </td>
+            <!--<td name="td_brand">
+                <span t-field="line.product_id.brand_id"/>
+            </td>-->
+        </xpath>
+        <xpath expr="//t[@t-foreach='lines']" position="inside">
+            <t t-if="not line.display_type" t-set="sl_no" t-value="sl_no + 1"/>
+        </xpath>
+
+        <xpath expr="//div[@id='total']" position="after">
+            <table class="table" width="100%" style="margin-top:5px;">
+                <tr class="border-black o_total"
+                    style="border: 1px solid black; color: #fff; background-color:#f08f92; padding: 1px !important;">
+                    <td style="width:99.9%;border-right:none !important;">
+                        <strong>Total(in words)
+                            <span t-esc="o.total_amount_in_words"/>
+                        </strong>
+                    </td>
+                    <td style="width:0.1%; color: #fff; background-color:#f08f92 !important;border-left:none !important;">
+                    </td>
+                </tr>
+            </table>
+
+
+        </xpath>
+        <xpath expr="//div[hasclass('mt-5')]" position="inside">
+            <!--<div class="row col-md-6">
+                <div></div>
+                <div>
+                    <span>For</span>
+                    <span t-esc="o.company_id.name"/>
+                </div>
+
+            </div>
+            <div class="row">
+                <div></div>
+                <div>
+                    <span>Authorised Signatory</span>
+                </div>
+
+            </div>-->
+            <table class="" width="100%" style="margin-top:10px;border: none !important;">
+                <tr style="border: none;">
+                    <td width="30%" style="border: none !important;">
+
+                    </td>
+                    <td width="70%" style="border: none !important;">
+                        <span>For</span>
+                        <span t-esc="o.company_id.name"/>
+                    </td>
+                </tr>
+                <tr style="border: none; padding-top:50px !important;">
+                    <td width="30%" style="border: none !important;padding-top: 128px">
+                        <span>Goods received in Good Condition</span>
+                    </td>
+                    <td width="70%" class="text-end" style="border: none !important;padding-top: 128px">
+                        <span>Authorised Signatory</span>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+
+    </template>
+
+    <template id="brand_inherit_stock_account_report_invoice" inherit_id="stock_account.stock_account_report_invoice_document">
+        <xpath expr="//table[@name='invoice_snln_table']" position="replace">
+            <span></span>
+        </xpath>
+    </template>
+
+    <template id="brand_report_purchase_order_document_inherited" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_brand" class="text-start">SL NO</th>
+            <th name="th_brand" class="text-start">Brand</th>
+        </xpath>
+        <xpath expr="//t[@t-foreach='o.order_line']" position="before">
+            <t t-set="sl_no" t-value="1"/>
+        </xpath>
+        <xpath expr="//td[@id='product']" position="before">
+            <td name="td_brand">
+                <span t-esc="sl_no"/>
+            </td>
+            <td name="td_brand">
+                <span t-field="line.product_id.brand_id"/>
+            </td>
+        </xpath>
+        <xpath expr="//t[@t-foreach='o.order_line']" position="inside">
+            <t t-if="not line.display_type" t-set="sl_no" t-value="sl_no + 1"/>
+        </xpath>
+    </template>
+
+</odoo>

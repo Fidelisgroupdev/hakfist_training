@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="po_price_edit_access" model="ir.module.category">
+            <field name="name">PO Price Edit Access</field>
+            <field name="description">PO Price Edit Access</field>
+        </record>
+
+        <record id="group_edit_po_price" model="res.groups">
+            <field name="name">Edit Purchase Price</field>
+            <field name="category_id" ref="hak_po_price_edit.po_price_edit_access"/>
+        </record>
+
+
+    </data>
+</odoo>

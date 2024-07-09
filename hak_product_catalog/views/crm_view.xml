@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_crm_lead_form_inherit_product_configurator" model="ir.ui.view">
+            <field name="name">view.crm.lead.form.inherit.product.configurator</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_sale_quotations_lines']" position="after">
+                    <button class="btn-primary" type="object" name="action_open_product_catalog"
+                            string="Product Catalog">
+
+                    </button>
+
+                </xpath>
+                <button name="action_schedule_meeting" position="after">
+                    <button class="oe_stat_button" name="%(hak_product_catalog.product_template_action_crm_product)d" icon="fa-th-list" type="action">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">Products</span>
+                        </div>
+                    </button>
+                    <button class="oe_stat_button" name="%(hak_product_catalog.product_product_crm_action)d" icon="fa-th-list" type="action">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">Products Variants</span>
+                        </div>
+                    </button>
+                </button>
+            </field>
+        </record>
+
+    </data>
+</odoo>

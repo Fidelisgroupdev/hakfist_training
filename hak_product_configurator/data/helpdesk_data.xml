@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.module.category" id="mock_request_categ">
+        <field name="name">Mockup request group</field>
+        <field name="sequence">7</field>
+    </record>
+
+    <record id="group_mock_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="hak_product_configurator.mock_request_categ"/>
+    </record>
+
+    <record id="group_mock_leader" model="res.groups">
+        <field name="name">Leader</field>
+        <field name="category_id" ref="hak_product_configurator.mock_request_categ"/>
+        <field name="implied_ids" eval="[(4, ref('hak_product_configurator.group_mock_user'))]"/>
+    </record>
+
+
+    <record id="product_category_psc" model="product.category">
+        <field name="name">PSC Product</field>
+        <field name="prefix">PSC</field>
+    </record>
+
+    <record id="product_category_ppsc" model="product.category">
+        <field name="name">Personalized PSC</field>
+        <field name="prefix">PPSC</field>
+    </record>
+
+
+    <record id="group_mock_admin" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="hak_product_configurator.mock_request_categ"/>
+        <field name="implied_ids"
+               eval="[(4, ref('hak_product_configurator.group_mock_leader')), (4, ref('hak_product_configurator.group_mock_user'))]"/>
+    </record>
+
+
+    <record id="seq_mock_request" model="ir.sequence">
+        <field name="name">Mock Request</field>
+        <field name="code">mock.request</field>
+        <field name="prefix">MR/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+    <record id="conf_sale_seq" model="ir.sequence">
+        <field name="name">Sale Order Sequence</field>
+        <field name="code">conf.sale.seq</field>
+        <field name="prefix">AMI/SO-%(month)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="printing_line_seq" model="ir.sequence">
+        <field name="name">Printing Line Sequence</field>
+        <field name="code">printing.line.seq</field>
+        <field name="prefix">_</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="crm_seqnum" model="ir.sequence">
+        <field name="name">CRM Sequence</field>
+        <field name="code">crm.seq</field>
+        <field name="prefix">CRM</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="pt_seq" model="ir.sequence">
+        <field name="name">Printing Type</field>
+        <field name="code">printing.type</field>
+        <field name="prefix">PT</field>
+        <field name="padding">3</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+    <!--    <record id="team_mock_team_crm" model="team.process">-->
+    <!--        <field name="name">Mockup Team</field>-->
+    <!--        <field name="applicability_ids" eval="[(4, ref('hak_product_configurator.group_mock_user'))]"/>-->
+
+    <!--    </record>-->
+
+
+    <record id="attachment_workspace_for_personalisation" model="documents.folder">
+        <field name="name">Customer Logos</field>
+
+    </record>
+
+</odoo>

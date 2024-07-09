@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <record id="product_component_wizard_form_view" model="ir.ui.view">
+            <field name="name">product.component.wizard.form.view</field>
+            <field name="model">product.component.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Create Component">
+
+                    <group>
+                        <group>
+                            <field name="product_id"
+                                   domain="[('personalization_applicable', '=', True), ('components_created', '=', False)]"/>
+                        </group>
+                        <field name="product_component_type_ids" force_save="1"
+                               context="{'default_wizard_id': id}">
+                            <tree editable="bottom">
+                                <!--                                <field name="wizard_id" invisible="1"/>-->
+                                <field name="component_type"/>
+                                <field name="name"/>
+                                <field name="printing_possible"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="action_create_component"
+                                string="Create Component"
+                                type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_product_component" model="ir.actions.act_window">
+            <field name="name">Components</field>
+            <field name="res_model">product.component.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="product_component_wizard_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="product_component_menu"
+                  name="Components"
+                  parent="stock.menu_product_in_config_stock"
+                  action="action_product_component"
+                  sequence="12"/>
+
+    </data>
+</odoo>

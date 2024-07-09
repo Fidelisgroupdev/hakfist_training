@@ -1,0 +1,7 @@
+table.table_tax_invoice tbody tr.table_tax_invoice_tr:nth-last-child(2)
+{
+height:100%;
+vertical-align:top;
+background-color: #e1e1e1;
+
+}

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_packaging_method,packaging.method,model_packaging_method,,1,1,1,1
+access_choose_packaging_method,choose.packaging.method,model_choose_packaging_method,,1,1,1,1
+
+

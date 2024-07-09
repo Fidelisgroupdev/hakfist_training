@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+        <record id="view_product_catalog_limit" model="ir.ui.view">
+            <field name="name">Product Configurator</field>
+            <field name="model">product.catalog.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Product Configurator">
+
+                    <group>
+                        <group>
+                            <field name="product_type"/>
+                            <field name="product_category_ids" invisible="view_type == 'product'" widget="many2many_tags" domain="[('personalization_applicable', '=', True), ('type', '=', 'normal')]"/>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="view_type" invisible="1"/>
+                            <field name="crm_id" invisible="view_type == 'crm'" required="1"/>
+                            <field name="price_range"/>
+                            <field name="stock_range"/>
+
+                            <field name="pdt_with_qty"/>
+                        </group>
+                        <group>
+                            <field name="show_price"/>
+                            <field name="show_stock"/>
+                            <field name="value" invisible="price_range == 'between'" />
+                            <field name="starting_price" invisible="price_range != 'between'"/>
+                            <field name="ending_price" invisible="price_range != 'between'"/>
+                            <field name="stock_qty" invisible="stock_range == 'between'" />
+                            <field name="starting_qty" invisible="stock_range != 'between'"/>
+                            <field name="ending_qty" invisible="stock_range != 'between'"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_print_product_catalog"
+                                string="Print"
+                                type="object"
+                                class="btn-primary"/>
+                        <button name="action_send_by_email"
+                                string="Send By Email"
+                                type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_product_catalog_limit" model="ir.actions.act_window">
+            <field name="name">Product Configurator</field>
+            <field name="res_model">product.catalog.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_product_catalog_limit"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_external_layout_standard">
+            <div class="header">
+                <!-- Company Header Details-->
+                <div t-if="other['partner']"
+                     style="top:550px;position:absolute;opacity:0.25;front-size:10em;width:100%;text-align:center;z-index:200;">
+                    <img t-if="other['partner'].customer_logo"
+                         style="vertical-align:middle;max-height:500px;max-width:580px;"
+                         t-att-src="image_data_uri(other['partner'].customer_logo)" alt="Logo"/>
+                </div>
+            </div>
+            <!--<div style="margin-left:1px !important;font-size:13px;page-break-inside: avoid;position: relative;"
+                 class="header">
+                <table width="100%" style="border-color: white;">
+                    <tr width="100%" style="border-color: white;">
+                        <th width="100%" style="border-color: white;">
+                            <img src="hak_product_catalog/static/src/header.png"
+                                 width="100%"/>
+                        </th>
+                    </tr>
+                </table>
+            </div>-->
+            <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"
+                 t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <div class="watermark_logo"
+                     style="top:550px;position:absolute;opacity:0.25;front-size:10em;width:100%;text-align:center;z-index:200;">
+                    <!-- <img style="vertical-align:middle;max-height:500px;max-width:580px;"
+                          t-attf-src="hak_product_catalog/static/src/water.jpg" alt="Logo"/>-->
+                </div>
+                <t t-raw="0"/>
+            </div>
+            <!--<div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"
+                 t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <div class="watermark_logo"
+                     style="top:550px;position:absolute;opacity:0.25;front-size:10em;width:100%;text-align:center;z-index:200;">
+                    <img style="vertical-align:middle;max-height:500px;max-width:580px;"
+                         t-attf-src="hak_product_catalog/static/src/water.jpg" alt="Logo"/>
+                </div>
+                <t t-raw="0"/>
+            </div>-->
+            <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+                <div class="row">
+                    <!--                    <div class="col-xs-6 text-left">-->
+                    <!--                        <span t-esc="time.strftime('%Y-%m-%d %H:%M:%S')"/>-->
+                    <!--                    </div>-->
+                    <div style="border-top: 2px solid #2c398f !important;" class="text-center">
+                        Page
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="custom_external_layout">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            <t t-call="hak_product_catalog.custom_external_layout_standard">
+                <t t-raw="0"/>
+            </t>
+        </template>
+
+
+        <template id="report_product_catalog">
+            <t t-call="web.html_container">
+                <t t-call="hak_product_catalog.custom_external_layout">
+                    <div class="page" style="font-size:13px">
+                        <br></br>
+                        <br></br>
+                        <center>
+                            <h2 style="margin-top:15px; color:#796d6d">Product Catalog</h2>
+                        </center>
+                        <br></br>
+                        <table width="100%"
+                               style="border-spacing:0 15px;border-collapse: separate;border-radius: 5px;border: 1px solid white;">
+                            <colgroup>
+                                <col style="width: 49%;"/>
+                                <col style="width: 2%;"/>
+                                <col style="width: 49%;"/>
+                            </colgroup>
+                            <!--                            other['partner']-->
+
+                            <!--                            <img t-if="product['image']"-->
+                            <!--                                 t-att-src="image_data_uri(other['partner'].customer_logo)"-->
+                            <!--                                 style="vertical-align:middle;height: -webkit-fill-available; max-height:200px;max-width:180px;padding-left:10px;padding-top:5px;"-->
+                            <!--                            />-->
+
+                            <tr>
+                                <t t-foreach="other['products']" t-as="pair">
+                                    <tr>
+                                        <t t-foreach="pair" t-as="product">
+                                            <td style="border:2px solid #2c398f !important;border-spacing: 10;border-collapse: separate;border-radius: 18px;">
+                                                <div class="row" style="height:300px;">
+                                                    <br></br>
+                                                    <div class="" style="width:30%;">
+                                                        <img t-if="product['image']"
+                                                             t-att-src="image_data_uri(product['image'])"
+                                                             style="vertical-align:middle;height: -webkit-fill-available; max-height:200px;max-width:180px;padding-left:10px;padding-top:5px;"
+                                                        />
+                                                        <span style="font-weight: bold;color:#2d398f;margin-left:10px">
+                                                            Colors:
+                                                        </span>
+                                                        <br>
+                                                        </br>
+                                                        <t t-set="i" t-value="1"></t>
+                                                        <t t-if="product['colors_list']"
+                                                           t-foreach="product['colors_list']" t-as="colors">
+                                                            <div class="row" style="width:30%;">
+                                                                <t t-set="j" t-value="1"></t>
+                                                                <t t-foreach="colors" t-as="color">
+                                                                    <span t-if="i == 1" style="margin-left:6px;">
+                                                                        <!--<div t-attf-style="width: 0;
+                                                                                           height: 0px;
+                                                                                           border-left: 10px solid transparent;
+                                                                                           border-right: 10px solid transparent;
+                                                                                           border-bottom: 10px solid #{color};"
+                                                                             class=""></div>
+                                                                        <div t-attf-style="height: 10px;
+                                                                                           width: 20px;
+                                                                                           background-color: #{color};"
+                                                                             class=""></div>
+                                                                        <div t-attf-style="width: 0;
+                                                                                           height: 0;
+                                                                                           border-left: 10px solid transparent;
+                                                                                           border-right: 10px solid transparent;
+                                                                                           border-top: 10px solid #{color};"
+                                                                             class=""></div>-->
+                                                                        <div t-attf-style="background-color:#{color};height: 20px;width: 20px;margin-left:10px;border: 1px solid black; border-radius:2px;">
+                                                                        </div>
+                                                                    </span>
+                                                                    <span t-if="i == 2" style="margin-left:6px;">
+                                                                        <t t-if="j &lt; 4">
+                                                                            <!--<div t-attf-style="width: 0;
+                                                                                           height: 0px;
+                                                                                           border-left: 10px solid transparent;
+                                                                                           border-right: 10px solid transparent;
+                                                                                           border-bottom: 10px solid #{color};"
+                                                                                 class=""></div>
+                                                                            <div t-attf-style="height: 10px;
+                                                                                           width: 20px;
+                                                                                           background-color: #{color};"
+                                                                                 class=""></div>
+                                                                            <div t-attf-style="width: 0;
+                                                                                           height: 0;
+                                                                                           border-left: 10px solid transparent;
+                                                                                           border-right: 10px solid transparent;
+                                                                                           border-top: 10px solid #{color};"
+                                                                                 class=""></div>-->
+                                                                            <div t-attf-style="background-color:#{color};height: 20px;width: 20px;margin-left:10px;border: 1px solid black; border-radius:2px;">
+                                                                            </div>
+                                                                        </t>
+                                                                        <t t-if="j == 4">
+                                                                            <div style="margin-left:6px;">And more...
+                                                                            </div>
+                                                                        </t>
+                                                                    </span>
+
+                                                                    <t t-set="j" t-value="j + 1"></t>
+
+                                                                </t>
+                                                                <t t-set="i" t-value="i + 1"></t>
+                                                            </div>
+                                                            <br></br>
+                                                        </t>
+                                                    </div>
+                                                    <div class=""
+                                                         style="width:65%;padding-left: 60px;font-size: 15px;color: #2f2626;">
+                                                        <br></br>
+                                                        <strong>
+                                                            <h5 style="color: #2c398f;font-weight: bold;"
+                                                                t-esc="product['name']"/>
+                                                        </strong>
+                                                        <span style="font-size: 15px;font-weight: bold;color: #f37c22;"
+                                                              t-esc="product['family_code']"/>
+                                                        <br>
+                                                        </br>
+                                                        <span style="font-weight: bold;color:#2d398f;font-size: 13px;">
+                                                            Specification:
+                                                        </span>
+                                                        <span t-esc="product['spec']" style="font-size: 13px;"/>
+                                                        <br></br>
+                                                        <t t-if="other['show_price']">
+                                                            <span style="font-size: 15px;font-weight: bold;color: #f37c22;">
+                                                                Price:
+                                                            </span>
+                                                            <span style="font-size: 15px;font-weight: bold;color: #f37c22;"
+                                                                  t-esc="product['price']"/>
+                                                        </t>
+                                                        <br>
+                                                        </br>
+                                                        <t t-if="other['show_stock']">
+                                                            <span style="font-size: 15px;font-weight: bold;color: #f37c22;"
+                                                                  t-esc="product['qty']"/><![CDATA[&nbsp;]]>
+                                                            <span style="font-size: 15px;font-weight: bold;color: #f37c22;"
+                                                                  t-esc="product['uom']"></span>
+                                                            <span style="color: white;">..</span>
+                                                            <span style="font-size: 15px;font-weight: bold;color: #f37c22;">
+                                                                Available
+                                                            </span>
+                                                        </t>
+                                                        <br>
+                                                        </br>
+                                                        <span style="font-weight: bold;color:#2d398f;font-size: 13px;">
+                                                            Country Of Origin:
+                                                        </span>
+                                                        <span t-esc="product['origin']" style="font-size: 13px;"/>
+                                                        <br></br>
+                                                        <span style="font-weight: bold;color:#2d398f;font-size: 13px;">
+                                                            HS Code:
+                                                        </span>
+                                                        <span t-esc="product['hs_code']" style="font-size: 13px;"/>
+                                                        <br></br>
+                                                        <!-- <t t-foreach="product['varients']" t-as="variant">
+                                                             <span t-esc="variant"></span>
+                                                             <br></br>
+                                                         </t>
+                                                         <br></br>-->
+                                                        <t t-if="product['packages']">
+                                                            <span style="font-weight: bold;color:#2d398f;font-size: 13px;">
+                                                                Packing Details
+                                                            </span>
+                                                            <br>
+                                                            </br>
+                                                            <t t-if="product['packages']"
+                                                               t-foreach="product['packages']" t-as="package">
+                                                                <span style="font-size: 13px;">Size:</span>
+                                                                <span t-if="package['size']" t-esc="package['size']"
+                                                                      style="font-size: 13px;"/>
+                                                                <br></br>
+                                                                <span style="font-size: 13px;">Weight:</span>
+                                                                <span t-if="package['weight']"
+                                                                      t-esc="package['weight']"
+                                                                      style="font-size: 13px;"/>,
+                                                                <span style="font-size: 13px;">Cont.Qty:</span>
+                                                                <span t-if="package['qty']" t-esc="package['qty']"
+                                                                      style="font-size: 13px;"/>
+                                                            </t>
+                                                        </t>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                            <td style="width:2% !important;">.</td>
+                                        </t>
+
+                                    </tr>
+
+                                    <!--<td>
+                                        <t t-esc="product['name']"/>
+                                    </td>-->
+                                </t>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
