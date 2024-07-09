@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template t-name="radorp_product_image_preview.ProductPreview" inherit_id="website_sale.products_item">
+
+        <xpath expr="//a[hasclass('oe_product_image_link')]" position="inside">
+             <div t-if="product.id and product.branding_image" id="odx_prev" class="modal" style=" background:transparent;position: absolute;margin-top: -27px;height:119%;">
+                    <div class="modal-dialog modal-content" id="modal_id"
+                     style="height:500px; background: transparent;border-color: transparent;position: relative;">
+                    <div class="modal-body" id="pop_html">
+
+                    </div>
+                </div>
+             </div>
+
+        </xpath>
+    </template>
+</odoo>
+
+
+

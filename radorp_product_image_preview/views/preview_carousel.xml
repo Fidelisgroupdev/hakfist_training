@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template t-name="radorp_product_image_preview.ProductCarouselPreview"
+              inherit_id="website_sale.dynamic_filter_template_product_product_view_detail">
+
+        <xpath expr="//a[hasclass('o_carousel_product_img_link')]" position="inside">
+            <div t-if="record.branding_image" id="prev_carousel" class="modal"
+                 style=" background:transparent;position: absolute;height:100%;width:100%;overflow-x: hidden !important ;overflow-y: hidden !important;">
+
+                <div class="ad_modal" t-att-data-product-id="record.id">
+                    <div class="modal-dialog modal-content" id="modal_id"
+                         style="background: transparent;border-color: transparent;position: relative;">
+                        <div class="modal-body" id="pop_html_carousel"
+                             style="overflow: hidden !important;height: 365;width:100%">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </xpath>
+    </template>
+
+</odoo>
+
+
+
