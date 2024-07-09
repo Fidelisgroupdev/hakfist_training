@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="product_supplierinfo_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.supplierinfo.form.view.inherit</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom']" position="before">
+                <label for="max_qty_field">
+                    Max Qty:
+                </label>
+                <field name="max_qty" id="max_qty_field"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_supplierinfo_tree_view_inherit" model="ir.ui.view">
+        <field name="name">product.supplierinfo.tree.view.inherit</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='min_qty']" position="after">
+                <field name="max_qty" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

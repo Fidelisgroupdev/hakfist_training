@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mail_activity_schedule_inherit_form_multi" model="ir.ui.view">
+        <field name="name">mail.activity.schedule.inherit.form.multi</field>
+        <field name="model">mail.activity.schedule</field>
+        <field name="inherit_id" ref="mail.mail_activity_schedule_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='activity_user_id']" position="after">
+                <field name="cc_user_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="mail_activity_inherit_form_multi" model="ir.ui.view">
+        <field name="name">mail.activity.inherit.form.multi</field>
+        <field name="model">mail.activity</field>
+        <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="cc_user_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

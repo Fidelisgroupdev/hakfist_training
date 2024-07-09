@@ -1,0 +1,77 @@
+<odoo>
+    <record id="email_template_cost_change_purchase" model="mail.template">
+        <field name="name">Cost Change Mail</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="subject">Order (Ref {{ object.name or 'n/a' }})</field>
+        <field name="email_from">{{(object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted)}}
+        </field>
+        <field name="description">Cost Change Activity Mail to Accounts Team</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <strong>Dear Accounts Team,</strong>
+                    <br/>
+                    <br/>
+                    We are writing to inform you of recent changes in costs related to Purchase Order
+                    <strong>
+                        <span t-out="object.name or ''">Order No: P00004</span>
+                    </strong>
+                    and Supplier is
+                    <strong>
+                        <span t-out="object.partner_id.name or ''">Supplier Name.</span>
+                    </strong>
+                    <br/>
+                    <br/>
+                    <strong>
+                        <a t-if="object.id"
+                       t-att-href="'/web#id=' + str(object.id) + '&amp;view_type=form&amp;model=purchase.order'">
+                        View Purchase Order
+                    </a>
+                    </strong>
+                    <br/>
+                    <br/>
+                    <strong>Product Details:</strong>
+                    <table border="1" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Standard Price</th>
+                                <th>Increased/Decreased Purchase Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="product_details" t-value="object.supplier_pricelist()"/>
+                            <t t-foreach="product_details" t-as="product_detail">
+                                <tr>
+                                    <td>
+                                        <t t-out="product_detail['product_name']"/>
+                                    </td>
+                                    <td>
+                                        <t t-out="product_detail['qty']"/>
+                                    </td>
+                                    <td>
+                                        <t t-out="product_detail['standard_price']"/>
+                                    </td>
+                                    <td>
+                                        <t t-out="product_detail['purchase_price']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <strong>Best regards,</strong>
+                    <t t-if="not is_html_empty(object.user_id.signature)">
+                        <br/>
+                        <br/>
+                        <strong>
+                            <t t-out="object.user_id.signature or ''">--<br/>Mitchell Admin
+                            </t>
+                        </strong>
+                    </t>
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>
