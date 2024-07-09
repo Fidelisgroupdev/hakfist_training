@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_custom_layout">
+        <t t-if="not o" t-set="o" t-value="docs"/>
+        <t t-set="company" t-value="company_id"/>
+
+        <div class="header">
+            <div>
+<!--                <table width="100%" style="color: #404653;">-->
+<!--                    <tr>-->
+<!--                        <td>-->
+<!--                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"-->
+<!--                                 alt="Company Logo"-->
+<!--                                 class="float-left" style="height:80px !important;"/>-->
+<!--                        </td>-->
+<!--                        <td style="text-align: right;">-->
+<!--                            <b>-->
+<!--                                <span style="font-size:40px !important;">-->
+<!--                                    Proforma Invoice-->
+<!--                                </span>-->
+<!--                                <br/>-->
+<!--                                <span style="font-size:20px !important;">-->
+<!--                                    &lt;!&ndash;                                    PI No: HAK/PI/2023/22187&ndash;&gt;-->
+<!--                                    <span t-esc="o.name"/>-->
+<!--                                </span>-->
+<!--                            </b>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>-->
+<!--                            <strong>-->
+<!--                                <span t-field="o.company_id"/>-->
+<!--                            </strong>-->
+<!--                            <div>-->
+<!--                                <span t-field="doc.company_id.city"/>,-->
+<!--                                <span t-field="doc.company_id.zip"/>-->
+<!--                                <br/>-->
+<!--                                <span t-field="doc.company_id.state_id"/>-->
+<!--                                <span t-field="doc.company_id.country_id"/>-->
+<!--                                <br/>-->
+<!--                                <span t-field="doc.company_id.mobile"/>-->
+<!--                                <br/>-->
+<!--                                <span t-field="doc.company_id.vat"/>-->
+
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+                <div style="display: table; width: 100%;">
+                    <div style="display: table-row; width: auto;">
+                        <div style="float: left; display: table-column; width: 50%;">
+                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                                 alt="Company Logo"
+                                 class="float-left" style="height:80px !important;"/>
+                        </div>
+                        <div style="float: right; display: table-column; width: 50%; text-align: right;">
+                            <b>
+                                <span style="font-size:40px !important;">
+                                    Proforma Invoice
+                                </span>
+                                <br/>
+                                <span style="font-size:20px !important;">
+                                    <span t-esc="o.name"/>
+                                </span>
+                            </b>
+                        </div>
+                    </div>
+                    <div style="display: table-row; width: 100%;">
+                        <div style="float: left; display: table-column; width: 50%;">
+                            <strong>
+                                <span t-field="o.company_id"/>
+                            </strong>
+                            <div>
+                                <span t-field="doc.company_id.city"/>,
+                                <span t-field="doc.company_id.zip"/>
+                                <br/>
+                                <span t-field="doc.company_id.state_id"/>
+                                <span t-field="doc.company_id.country_id"/>
+                                <br/>
+                                <span t-field="doc.company_id.mobile"/>
+                                <br/>
+                                <span t-field="doc.company_id.vat"/>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <t t-out="0"/>
+        </div>
+        <div class="footer">
+            <div class="text-center" style="border-top: 1px solid black; color: #404653;">
+                <ul class="list-inline">
+                    <li style="text-align:center;">Thankyou for choosing HAK Gifts as your business partner.
+                    </li>
+                    <li style="text-align:center;">2023 GIFT CATALOGUE
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </template>
+
+    <template id="proforma_custom_invoice_report">
+        <t t-call="web.html_container">
+            <t t-call="jsa_proforma_custom_report.external_layout_base">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <table width="100%" style="color: #404653;">
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td style="text-align: right;">
+                                    Date:
+                                </td>
+                                <td style="text-align: right;">
+                                    <span class="ms-8" t-field="doc.date_order"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Customer Name
+                                </td>
+                                <td style="text-align: right;">
+                                    Payment Terms :
+                                </td>
+                                <td style="text-align: right;">
+                                    <span class="ms-8" t-field="doc.payment_term_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="ms-8" t-field="doc.partner_id"/>
+                                    </strong>
+                                </td>
+                                <td style="text-align: right;">
+                                    Delivery Date :
+                                </td>
+                                <td style="text-align: right;">
+                                    <span class="ms-8" t-field="doc.commitment_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span t-field="doc.partner_id.city"/>,
+                                    <span t-field="doc.partner_id.zip"/>
+                                </td>
+                                <td style="text-align: right;">
+                                    Ref :
+                                </td>
+                                <td style="text-align: right;">
+                                    <span class="ms-8" t-field="doc.origin"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span t-field="doc.partner_id.state_id"/>,
+                                    <span t-field="doc.partner_id.country_id"/>
+                                </td>
+                                <td style="text-align: right;">
+                                    Sales person :
+                                </td>
+                                <td style="text-align: right;">
+                                    <span class="ms-8" t-field="doc.user_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span t-field="doc.partner_id.mobile"/>
+                                </td>
+                                <td style="text-align: right;">
+                                    Type of Order :
+                                </td>
+                                <td style="text-align: right;">
+                                    <!--                                    <span class="ms-8" t-field=""/>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span t-field="doc.partner_id.vat"/>
+                                </td>
+                                <td style="text-align: right;">
+                                    Sample given :
+                                </td>
+                                <td style="text-align: right;">
+                                    <!--                                    <span class="ms-8" t-field=""/>-->
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table style="border: 1px solid grey; border-bottom: 1px solid black;  border-collapse:collapse; margin:5px;"
+                               width="100%">
+                            <tr style="border: 1px solid grey; background-color: #96D4D4;" width="100%">
+                                <thead>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>#</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Code</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Item</strong>
+                                    </th>
+                                    <th style="width:25% !important; border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Description</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Qty</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Unit Price</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Tax</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Untaxed Total</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Vat Amount</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Total</strong>
+                                    </th>
+                                </thead>
+                            </tr>
+                            <t t-set="counter" t-value="1"/>
+                            <t t-set="vat_amount_total" t-value="0"/>
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <t>
+                                    <tr style="width=100%; color: #404653;">
+                                        <td style="text-align:center; padding:10px;">
+                                            <span t-esc="counter"/>
+                                            <t t-set="counter" t-value="counter+1"/>
+                                        </td>
+                                        <td style="text-align:center; padding:10px;">
+                                            <t t-esc="line.product_id.default_code"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <img t-if="line.product_id.image_128"
+                                                 t-att-src="image_data_uri(line.product_id.image_128)"
+                                                 style="width: 90%"/>
+                                        </td>
+                                        <td style="text-align:center; padding:10px;">
+                                            <t t-esc="line.name"/>
+                                        </td>
+                                        <td style="text-align:center; padding:10px;">
+                                            <t t-esc="line.product_uom_qty"
+                                               t-options='{"widget": "float", "precision": 0}'/>
+                                        </td>
+                                        <td style="text-align:center; padding:10px;">
+                                            <t t-esc="line.price_unit" t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+                                        <td style="text-align:center; padding:10px;">
+                                            <t t-esc="line.tax_id.name"/>
+                                        </td>
+                                        <td style="text-align:center; padding:10px;">
+                                            <t t-esc="line.price_subtotal"
+                                               t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+                                        <td style="text-align:center; padding:10px;">
+                                            <t t-esc="round(line.price_total-line.price_subtotal,2)"
+                                               t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+
+                                        <t t-set="vat_amount_total"
+                                           t-value="vat_amount_total + round(line.price_total-line.price_subtotal,2)"/>
+
+                                        <td style="text-align:center; padding:10px;">
+                                            <t t-esc="line.price_total"
+                                               t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+                        <br/>
+                        <table width="100%" style="color: #404653;">
+                            <tr>
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+                                <td style="text-align: right; height:50px;">
+                                    <div>
+                                        <span>Sub Total</span>
+                                    </div>
+                                </td>
+                                <td style="text-align: right; width:200px;">
+                                    <div>
+                                        <t t-esc="sum(doc.order_line.mapped('price_subtotal'))"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                        <br/>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+                                <td style="text-align: right; height:50px;">
+                                    <div>
+                                        <span>Standard Rate</span>
+                                    </div>
+                                </td>
+                                <td style="text-align: right; width:200px;">
+                                    <div>
+                                        <!--                                        <t t-esc="vat_amount_total"-->
+                                        <!--                                           t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>-->
+                                        <!--                                        <br/>-->
+                                        <t t-esc="doc.amount_tax"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                        <br/>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+                                <td style="text-align: right; height:50px; background-color: #f5f4f3;">
+                                    <div>
+                                        <strong>
+                                            <span>Total</span>
+                                        </strong>
+                                    </div>
+                                </td>
+                                <td style="text-align: right; width:200px; background-color: #f5f4f3;">
+                                    <div>
+                                        <strong>
+                                            <t t-esc="doc.amount_total"
+                                               t-options='{"widget": "float", "precision": 2}'/>
+                                            <t t-esc="doc.currency_id.symbol"/>
+                                        </strong>
+                                        <br/>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table style="color: #404653;" width="100%">
+                            <tr>
+                                <th style="text-align: left;">
+                                    Tax Summary
+                                </th>
+                            </tr>
+                        </table>
+                        <table style="border: 1px solid grey; border-bottom: 1px solid black;  border-collapse:collapse; margin:5px;"
+                               width="100%">
+                            <tr style="border: 1px solid grey; background-color: #96D4D4;" width="100%">
+                                <thead>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Tax Details</strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Taxable Amount (<t t-esc="doc.currency_id.symbol"/>)
+                                        </strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Tax Amount (<t t-esc="doc.currency_id.symbol"/>)
+                                        </strong>
+                                    </th>
+                                    <th style="border: 1px solid #3c3d3a; text-align:center; font-size:14px; background-color: #3c3d3a; color: white; padding:10px;">
+                                        <strong>Total Amount (<t t-esc="doc.currency_id.symbol"/>)
+                                        </strong>
+                                    </th>
+                                </thead>
+                            </tr>
+                            <t t-set="vat_amount_total" t-value="0"/>
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <tr style="color: #404653;">
+                                    <td style="text-align:center; padding:10px;">
+                                        Standard Rate (
+                                        <t t-esc="line.tax_id.name"
+                                           t-field-options='{"widget": "monetary", "display_currency": "doc.currency_id"}'/>
+                                        )
+                                    </td>
+                                    <td style="text-align:center; padding:10px;">
+                                        <t t-esc="line.price_subtotal"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                    </td>
+
+                                    <td style="text-align:center; padding:10px;">
+                                        <t t-esc="round(line.price_total-line.price_subtotal,2)"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                    </td>
+                                    <td style="text-align:center; padding:10px;">
+                                        <t t-esc="line.price_total"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr style="width=100%;">
+                                <td style="text-align:center; padding:10px; border-top: 1px solid grey;">
+                                    <strong>Total</strong>
+                                </td>
+                                <td style="text-align:center; padding:10px; border-top: 1px solid grey;">
+                                    <strong>
+                                        <t t-esc="sum(doc.order_line.mapped('price_subtotal'))"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                        <t t-esc="doc.currency_id.symbol"/>
+                                    </strong>
+                                </td>
+
+                                <td style="text-align:center; padding:10px; border-top: 1px solid grey;">
+                                    <strong>
+                                        <t t-esc="doc.amount_tax"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                        <t t-esc="doc.currency_id.symbol"/>
+                                    </strong>
+                                </td>
+                                <td style="text-align:center; padding:10px; border-top: 1px solid grey;">
+                                    <strong>
+                                        <t t-esc="doc.amount_total"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                        <t t-esc="doc.currency_id.symbol"/>
+                                    </strong>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <br/>
+                        <div style="color: #404653;">
+                            Notes
+                            <br/>
+                            Looking forward for your business.
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="external_layout_base">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <t t-call="jsa_proforma_custom_report.external_custom_layout">
+            <t t-out="0"/>
+        </t>
+
+    </template>
+</odoo>

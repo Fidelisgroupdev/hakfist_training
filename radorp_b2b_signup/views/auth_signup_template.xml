@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="auth_sighup_inherit" inherit_id="auth_signup.fields">
+        <xpath expr="//div[hasclass('field-login')]" position="before">
+            <div class="d-flex field-user-type form-group justify-content-around">
+                <label class="radio-inline user_btn">
+                    <input type="radio" name="company_type" value="person" class="person" checked="checked"
+                           required="required"/>
+                    Individual
+                </label>
+                <label class="radio-inline company_btn">
+                    <input type="radio" name="company_type" value="company" class="company" required="required"/>
+                    Company
+                </label>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('field-name')]" position="after">
+            <div class="mb-3 company_vat_group form-group field-vat">
+                <label class="label_vat" for="vat">VAT</label>
+                <input type="text" name="vat" t-att-value="vat" id="vat" class="form-control form-control-sm input_vat"
+                       required="required"/>
+            </div>
+            <div class="mb-3 form-group field-address1">
+                <label for="street">Street &amp; Number</label>
+                <input type="text" name="street" t-att-value="street" id="street" class="form-control form-control-sm"
+                       required="required"/>
+            </div>
+            <div class="row mb-3">
+                <div class="form-group field-city col-md-6">
+                    <label for="city">City</label>
+                    <input type="city" name="city" id="city" class="form-control form-control-sm"/>
+                </div>
+                <div class="form-group field-zip col-md-6">
+                    <label for="zip">Zipcode</label>
+                    <input type="zip" name="zip" id="zip" class="form-control form-control-sm" required="required"/>
+                </div>
+            </div>
+            <div class="mb-2 form-group field-country_id">
+                <label for="country">Country</label>
+                <select id="country_id" name="country_id" class=" form-control form-control-sm">
+                    <t t-foreach="country_ids" t-as="d">
+                        <option t-att-value="d.id" t-att-id="d.id" t-att-class="d.name">
+                            <t t-out="d.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+            <div class="mt-1 mb-2 form-group field-state_id">
+                <label for="state">State</label>
+                <select id="state_id" name="state_id" class="form-control form-control-sm" placehoder="select">
+                    <option value="0" country_id="0">--select--</option>
+                    <t t-foreach="state_ids" t-as="s">
+                        <option t-att-value="s.id" t-att-country_id="s.country_id.id">
+                            <t t-out="s.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </template>
+</odoo>

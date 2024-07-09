@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_form_product_configurator" model="ir.ui.view">
+        <field name="name">product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="configurator_id"/>
+            </field>
+            <xpath expr="//page[@name='general_information']" position="after">
+                <page name="Iframe" string="Design">
+                    <iframe src="https://productcustomiser.betaspace.dev/admin.php?lumise-page=product&amp;odoo&amp;id=1"
+                            frameborder="no"
+                            style="width:100%; height:500px;"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="product_share_buttons" inherit_id="website_sale.product" active="True" name="Share Buttons"
+              priority="22">
+        <xpath expr="//div[@id='o_wsale_cta_wrapper']//div[@id='add_to_cart_wrap']//a[@id='add_to_cart']" position="replace">
+            <a data-animation-selector=".o_wsale_product_images" role="button" id="cart_customize"
+                   t-attf-class="btn btn-primary"
+                    t-attf-href="https://productcustomiser.betaspace.dev/editor.php?odoo=undefined&amp;product_base={{ product.configurator_id }}">
+<!--                   href="https://productcustomiser.betaspace.dev/editor.php?odoo=undefined&amp;product_base=3">-->
+                    <i class="fa fa-shopping-cart me-2"/>
+                    Customize
+                </a>
+        </xpath>
+<!--        <xpath expr="//div[@id='o_wsale_cta_wrapper']//div[@id='add_to_cart_wrap']" position="after">-->
+<!--            <div id="customize_wrap">-->
+<!--                &lt;!&ndash;                t-attf-href="/my-custom-page/{{ product.id }}"&ndash;&gt;-->
+<!--                <a data-animation-selector=".o_wsale_product_images" role="button" id="cart_customize"-->
+<!--                   t-attf-class="btn btn-primary"-->
+<!--                   href="https://productcustomiser.betaspace.dev/editor.php?odoo=undefined&amp;product_base=3">-->
+<!--                    <i class="fa fa-shopping-cart me-2"/>-->
+<!--                    Customize-->
+<!--                </a>-->
+<!--            </div>-->
+
+
+<!--            &lt;!&ndash;            <a href="YOUR_URL" class="btn btn-primary">Customize</a>&ndash;&gt;-->
+<!--        </xpath>-->
+        <!--        <xpath expr="//div[@id='product_detail']//div[@id='add_to_cart']" position="after">-->
+        <!--            <a href="YOUR_URL" class="btn btn-primary">YOUR_BUTTON_TEXT</a>-->
+        <!--        </xpath>-->
+        <!--        <xpath expr="//div[@id='o_product_terms_and_share']" position="inside">-->
+        <!--            <div class="h4 mt-3 mb-0 d-flex justify-content-md-end flex-shrink-0" contenteditable="false">-->
+        <!--                <t t-snippet-call="website.s_share">-->
+        <!--                    <t t-set="_exclude_share_links" t-value="['whatsapp', 'linkedin']"/>-->
+        <!--                    <t t-set="_no_title" t-value="True"/>-->
+        <!--                    <t t-set="_classes" t-valuef="text-lg-end"/>-->
+        <!--                    <t t-set="_link_classes" t-valuef="mx-1 my-0"/>-->
+        <!--                </t>-->
+        <!--            </div>-->
+        <!--        </xpath>-->
+    </template>
+</odoo>
