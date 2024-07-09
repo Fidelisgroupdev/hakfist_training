@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_only_form_view_inherit_jsa" model="ir.ui.view">
+        <field name="name">product.template.only.form.view.inherit.jsa</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='detailed_type']" position="after">
+                <field name="reference_type" invisible="1"/>
+                <field name="family_code" invisible= "reference_type =='manual'"/>
+            </xpath>
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="readonly">reference_type !='manual'
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_normal_form_view_inherit_jsa" model="ir.ui.view">
+        <field name="name">product.normal.form.view.inherit.jsa</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="family_code" invisible="1"/>
+                <field name="old_sku"/>
+                <field name="reference_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="readonly">reference_type !='manual'
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_variant_easy_edit_view_inherit_jsa" model="ir.ui.view">
+        <field name="name">product.variant.easy.edit.view.inherit.jsa</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="reference_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="readonly">reference_type !='manual'
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_attribute_view_form_inherit_jsa" model="ir.ui.view">
+        <field name="name">product.attribute.view.form.inherit.jsa</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="sl_no"/>
+            </xpath>
+            <xpath expr="//page[@name='attribute_values']/field/tree/field[@name='name']" position="after">
+                <field name="code" required="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="product_attribute_view_tree_inherit_jsa" model="ir.ui.view">
+        <field name="name">product.attribute.view.tree.inherit.jsa</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.attribute_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_variant']" position="after">
+                <field name="sl_no"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

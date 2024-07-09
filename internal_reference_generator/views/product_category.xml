@@ -1,0 +1,20 @@
+<odoo>
+
+    <record id="product_category_form_view_inherit_jsa" model="ir.ui.view">
+        <field name="name">product.category.form.inherit.jsa</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='first']" position="after">
+                <group>
+                    <group>
+                        <field name="reference_type" required="1"/>
+                        <field name="prefix" required="reference_type =='sl_no'" invisible="reference_type =='manual'"/>
+                        <field name="sequence_id" readonly="1"/>
+                    </group>
+                    <group></group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_inter_company_payment_form_view" model="ir.ui.view">
+            <field name="name">inter.company.payment.form.view</field>
+            <field name="model">inter.company.payment</field>
+            <field name="arch" type="xml">
+                <form string="Inter Company Payment" create="0" edit="0">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,post"/>
+                        <button name="open_set_destination_journal_wiz" string="Create InterCompany Payment"
+                                type="object" invisible="state not in ['confirm']"
+                                class="oe_highlight"/>
+<!--                        <button name="action_post" string="Post"-->
+<!--                                type="object"-->
+<!--                                class="oe_highlight" states="confirm"/>-->
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_source_payment" type="object" class="oe_stat_button"
+                                    invisible="source_payment_order_count ==0" icon="fa-exchange">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="source_payment_order_count"/>
+                                    </span>
+                                    <span class="o_stat_text">Source Payment</span>
+                                </div>
+                            </button>
+                            <button name="action_view_intercompany_payment" type="object" class="oe_stat_button"
+                                    invisible="payment_inter_order_count ==0" icon="fa-exchange">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="payment_inter_order_count"/>
+                                    </span>
+                                    <span class="o_stat_text">Destination Payment</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="payment_type"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="payment_method_line_id"/>
+                                <field name="source_partner_id"/>
+                                <field name="source_payment_id"/>
+                                <field name="destination_payment_id"/>
+                            </group>
+                            <group>
+                                <field name="source_journal_id"/>
+                                <field name="destination_journal_id"/>
+                                <field name="date"/>
+                                <field name="amount"/>
+                                <field name="ref"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="inter_company_payment_tree_view" model="ir.ui.view">
+            <field name="name">inter.company.payment.tree.view</field>
+            <field name="model">inter.company.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Inter Company Payment" create="0" edit="0">
+                    <field name="name"/>
+                    <field name="source_payment_id"/>
+                    <field name="source_partner_id"/>
+                    <field name="partner_id"/>
+                    <field name="payment_type"/>
+                    <field name="source_journal_id"/>
+                    <field name="destination_journal_id"/>
+                    <field name="date"/>
+                    <field name="amount"/>
+                    <field name="ref"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="inter_company_payment_action">
+            <field name="name">Inter Company Payment</field>
+            <field name="res_model">inter.company.payment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="inter_company_payment_parent_menu"
+                  name="Inter Company Transactions"
+                  parent="account_accountant.menu_accounting"
+                  sequence="3"/>
+        <menuitem id="inter_company_payment_menu"
+                  name="Inter Company Payment"
+                  parent="inter_company_payment_parent_menu"
+                  action="inter_company_payment_action"
+                  sequence="3"/>
+    </data>
+</odoo>

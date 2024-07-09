@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_account_payment_form_inter_company_payment" model="ir.ui.view">
+            <field name="name">view.account.payment.form.inter.company.payment.payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='is_internal_transfer']" position="after">
+                    <field name="is_payment_auto_created" readonly="1"/>
+                    <field name="is_inter_company_transfer" invisible="0"/>
+                </xpath>
+                <xpath expr="//button[@name='button_open_journal_entry']" position="after">
+                    <button name="button_open_inter_company_payment" type="object" class="oe_stat_button"
+                           invisible ="inter_payment_order_count == 0" icon="fa-exchange">
+                        <div class="o_stat_info">
+                            <span class="o_stat_value"><field name="inter_payment_order_count"/></span>
+                            <span class="o_stat_text">Inter Company Payment</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
